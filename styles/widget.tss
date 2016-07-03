@@ -1,0 +1,18 @@
+"#widget":{
+	height: '230dp'
+},
+"#image":{
+	height: '200dp',
+	width:Ti.UI.FILL,
+	backgroundColor: '#f0edee'
+},
+"#fab[platform=android]":{
+	icon:{
+		image: Alloy.Globals.Images.camera
+	}
+},
+"#icon_empty":{
+	image:Alloy.Globals.Images.insert_photo,
+	height: '80dp',
+	width: '80dp'
+}
