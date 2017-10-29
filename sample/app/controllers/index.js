@@ -6,14 +6,21 @@ var onClose = function(e) {
 
 	var tps = [$.tp, $.tp2, $.tp3];
 
+	var isTp1 = true;
 	tps.forEach(function(tp) {
 		tp.onOpen({});
-		if (OS_IOS) {
-			tp.applyProperties({
-				parentWindow : $.index
-			});
+		if (isTp1) {
+			if (OS_IOS) {
+				tp.applyProperties({
+					parentWindow : $.index
+				});
+			}
 		}
+		isTp1 = false;
 	});
+	
+	//set default image for tp2
+	$.tp2.setImage('https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Appcelerator_logo.svg/220px-Appcelerator_logo.svg.png');
 
 })();
 

@@ -2,8 +2,7 @@
 	<View class="top">
 		<View id="container_general" class="top">
 			<View id="container_image" class="top">
-				<ImageView id="image" platform="android"/>
-				<View id="image" platform="ios"/>
+				<ImageView id="image"/>
 				<ImageView id="icon_empty" class="icon"/>
 				<ActivityIndicator id="loader"/>
 			</View>

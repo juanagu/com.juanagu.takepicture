@@ -36,24 +36,6 @@ if (OS_IOS) {
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-var options = {
-	showControls : OS_IOS,
-	saveToPhotoGallery : false,
-	mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
-	autohide : true,
-	allowEditing : allowEditing,
-	animated : OS_ANDROID,
-	success : function(e) {
-		onSuccess(e);
-	},
-	cancel : function(e) {
-		onCancel(e);
-	},
-	error : function(e) {
-		onError(e);
-	}
-};
-
 var thumbnailPath = null;
 var imagePath = null;
 var name = 'my_base_name';
@@ -76,12 +58,33 @@ var allowEditing = true;
 
 var fab = OS_ANDROID ? $.fab : null;
 
+var options = {
+	showControls : OS_IOS,
+	saveToPhotoGallery : false,
+	mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
+	autohide : true,
+	allowEditing : allowEditing,
+	animated : OS_ANDROID,
+	success : function(e) {
+		onSuccess(e);
+	},
+	cancel : function(e) {
+		onCancel(e);
+	},
+	error : function(e) {
+		onError(e);
+	}
+};
+
 if (OS_IOS) {
 	var iOSFabStyle = {
 		right : 0,
 		bottom : 0,
 		backgroundColor : 'transparent',
-		touchEnabled : true
+		touchEnabled : true,
+		icon : {
+			image : WPATH('images/ic_photo_camera_white.png')
+		}
 	};
 };
 /** ------------------------
@@ -92,7 +95,6 @@ if (OS_IOS) {
  * @param {Object} properties
  */
 var applyProperties = function(properties) {
-	Ti.API.info('applyProperties', JSON.stringify(properties));
 	if (_.isObject(properties)) {
 
 		if (_.has(properties, 'options')) {
@@ -127,7 +129,6 @@ var applyProperties = function(properties) {
 			allowEditing = properties.allowEditing;
 		}
 
-		
 		if (_.has(properties, 'image')) {
 			_.extend($.image, _.omit(properties.image, 'image'));
 		}
@@ -141,26 +142,27 @@ var applyProperties = function(properties) {
 			_.extend($.icon_empty, properties.icon_empty);
 		}
 
-		if(OS_ANDROID && _.has(properties, 'fab')){
+		if (OS_ANDROID && _.has(properties, 'fab')) {
 			$.fab.applyProperties(properties.fab);
 		}
-		
-		if (OS_IOS && _.has(properties, 'ios')) {
-			if (properties.ios.widthFab) {
+
+		if (OS_IOS && _.isNull(fab) && _.has(properties, 'ios')) {
+			if (properties.ios.withFab) {
 				if (_.has(properties.ios, 'fab')) {
-					iOSFabStyle = properties.ios.fab;
+					_.extend(iOSFabStyle, properties.ios.fab);
+				} else if (_.has(properties, 'fab')) {
+					_.extend(iOSFabStyle, properties.fab);
 				}
 				addFABiOS();
 
 			}
 		}
-		
-		if (OS_IOS && _.has(properties, 'parentWindow')) {
+
+		if (OS_IOS && _.isNull(fab) && _.has(properties, 'parentWindow')) {
 			parentWindow = properties.parentWindow;
 			configureRightNavButton();
 		}
-		
-		
+
 		_.extend($.widget, _.omit(properties, 'options', 'imagePath', 'thumbnailPath', 'name', 'fab', 'imageMaxSize', 'thumbnailMaxsize', 'editMode', 'parentWindow', 'allowEditing', 'image', 'container_general', 'container_image', 'icon_empty', 'ios'));
 	}
 
@@ -181,7 +183,11 @@ var cleanup = function() {
  * apply listeners to controller
  */
 var applyListeners = function() {
+
 	$.image.addEventListener('click', onClickImage);
+	$.image.addEventListener('load', downloadSuccess);
+	$.image.addEventListener('error', downloadError);
+
 	if (editMode && fab) {
 		fab.on('click', onClickCamera);
 	}
@@ -210,7 +216,6 @@ var init = function() {
  * when window is opened
  */
 var onOpen = function(e) {
-	Ti.API.info(TAG, 'onopen');
 	init();
 	if (fab) {
 		fab.onOpen(e);
@@ -419,7 +424,6 @@ var saveImage = function(media) {
  * @param {TiBlob} media
  */
 var saveThumbnail = function(media) {
-	Ti.API.info(TAG, 'saveThumbnail(), media -> ' + media);
 	var f = Titanium.Filesystem.getFile(PATH, name + THUMBNAIL_EXTENSION + EXTENSION);
 	try {
 
@@ -527,7 +531,7 @@ var setImagePath = function(path) {
  */
 var setThumbnailPath = function(path) {
 	thumbnailPath = path;
-	refreshImage();
+	setImage(thumbnailPath);
 };
 
 /**
@@ -547,35 +551,20 @@ var getThumbnailPath = function() {
 };
 
 /**
- * refresh image in imageView
+ * set image to show
  */
-var refreshImage = function() {
-	if (_.isString(thumbnailPath) || !_.isNull(thumbnailPath)) {
-		if (OS_ANDROID) {
-			//HACK null image to refresh
-			if (thumbnailPath == $.image.image) {
-				$.image.image = null;
-			}
-			$.image.setImage(thumbnailPath);
-
-		} else if (OS_IOS) {
-			$.image.removeAllChildren();
-			$.image.add(Titanium.UI.createImageView({
-				height : Ti.UI.SIZE,
-				width : Ti.UI.FILL,
-				autorotate : true,
-				image : thumbnailPath,
-				touchEnabled : false
-			}));
-		}
-
-		$.image.backgroundColor = 'transparent';
+var setImage = function(img) {
+	if (!_.isNull(img)) {
+		$.image.hide();
 		$.icon_empty.hide();
-		//HACK to ios because visible false not work
-		if (OS_IOS) {
-			$.icon_empty.zIndex = 0;
-			$.image.zIndex = 1;
+		$.loader.show();
+		
+		if ($.image.image == img) {
+			$.image.image = null;
 		}
+
+		$.image.setImage(img);
+		
 	} else {
 		$.icon_empty.show();
 	}
@@ -630,11 +619,25 @@ if (OS_IOS) {
 
 }
 
-var addFABiOS = function() {
-	if (_.isNull(fab)) {
-		fab = Alloy.createWidget('com.juanagu.fab', iOSFabStyle);
-		$.container_general.add(fab.getView());
-	}
+if (OS_IOS) {
+	var addFABiOS = function() {
+		if (_.isNull(fab)) {
+			fab = Alloy.createWidget('com.juanagu.fab', iOSFabStyle);
+			$.container_general.add(fab.getView());
+		}
+	};
+}
+
+var downloadSuccess = function() {
+	$.trigger('load:success');
+	$.loader.hide();
+	$.image.show();
+};
+
+var downloadError = function() {
+	$.trigger('load:error');
+	$.image.hide();
+	$.icon_empty.show();
 };
 /** ------------------------
  Integration with Widgets.nlFokkezbForms
@@ -660,10 +663,10 @@ exports.onClose = onClose;
 exports.cleanup = cleanup;
 exports.getImagePath = getImagePath;
 exports.getThumbnailPath = getThumbnailPath;
-exports.refreshImage = refreshImage;
+exports.setImage = setImage;
 /*Integration with Widgets.nlFokkezbForms */
 exports.isValid = isValid;
 exports.getValue = getImagePath;
-exports.setValue = setThumbnailPath;
+exports.setValue = setImage;
 exports.next = focus;
 exports.blur = blur;

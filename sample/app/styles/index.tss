@@ -2,6 +2,9 @@
 	title: 'Jagu TakePicture',
 	backgroundColor: 'white'
 },
+"#scroll":{
+	contentWidth:Ti.UI.FILL
+}
 
 /*Custom design*/
 "#tp2":{
@@ -23,7 +26,12 @@
 		height: '30dp'
 	},
 	ios:{
-		withFab: true
+		withFab: true,
+		fab:{
+			icon:{
+				image: '/images/ic_photo_camera_black.png'
+			}
+		}
 	}
 },
 "#tp3":{
@@ -41,7 +49,7 @@
 	},
 	image:{
 		width: Ti.UI.FILL,
-		height:'300dp' //scale image
+		height: '300dp' //scale image
 	},
 	icon_empty:{
 		width: '50dp',

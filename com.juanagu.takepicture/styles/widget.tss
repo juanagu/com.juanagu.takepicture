@@ -1,18 +1,42 @@
+/*General Styles*/
+".icon":{
+	width: '24dp',
+	height: '24dp'
+},
+".top":{
+	top: 0
+},
+/*Default widget styles, you can override this styles using applyProperties and create your custom view!*/
 "#widget":{
-	height: '230dp'
+	height:Ti.UI.SIZE,
+	width:Ti.UI.SIZE,
+	left: 0
+},
+"#container_general":{
+	width: '256dp',
+	height: '234dp'
+},
+"#container_image":{
+	height:Ti.UI.SIZE,
+	width:Ti.UI.SIZE,
+	borderColor: '#01579B',
+	borderWidth: '6dp',
 },
 "#image":{
 	height: '200dp',
-	width:Ti.UI.FILL,
-	backgroundColor: '#f0edee'
+	width: '200dp',
+	backgroundColor: '#transparent'
 },
 "#fab[platform=android]":{
 	icon:{
-		image: Alloy.Globals.Images.camera
-	}
+		image: WPATH( 'images/ic_photo_camera_white.png')
+	},
+	right: 0,
+	bottom: 0
 },
 "#icon_empty":{
-	image:Alloy.Globals.Images.insert_photo,
+	image:WPATH( 'images/ic_insert_photo_black.png'),
 	height: '80dp',
-	width: '80dp'
+	width: '80dp',
+	opacity: 0.5
 }
