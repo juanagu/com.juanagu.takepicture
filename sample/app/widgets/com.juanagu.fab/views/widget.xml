@@ -1,0 +1,6 @@
+<Alloy>
+	<View id="touch" onTouchstart="onTouchStart" onTouchend="onTouchEnd" onClick="onClick">
+		<View id="circle"/>
+		<ImageView id="icon" />
+	</View>
+</Alloy>

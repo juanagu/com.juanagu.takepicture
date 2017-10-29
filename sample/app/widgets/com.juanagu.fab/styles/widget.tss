@@ -1,0 +1,31 @@
+"#touch":{
+	height: '58dp',
+	width: '58dp',
+	borderRadius: '29dp',
+	touchEnabled: true,
+	visible: false,
+	backgroundColor: 'transparent'
+},
+"#circle":{
+	height: '56dp',
+	width: '56dp',
+	borderRadius: '28dp',
+	borderWidth: '28dp',
+	borderColor: '#F44336',
+	backgroundColor: '#F44336',
+	zIndex: 1,
+	
+},
+"#icon":{
+	height: '24dp',
+	width: '24dp',
+	zIndex: 2
+},
+"#circle[platform=android]":{
+	elevation: 49
+},
+"#icon[platform=android]":{
+	elevation: 50
+}
+
+

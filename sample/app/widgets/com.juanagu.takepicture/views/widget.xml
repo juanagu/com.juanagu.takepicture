@@ -1,0 +1,13 @@
+<Alloy>
+	<View class="top">
+		<View id="container_general" class="top">
+			<View id="container_image" class="top">
+				<ImageView id="image" platform="android"/>
+				<View id="image" platform="ios"/>
+				<ImageView id="icon_empty" class="icon"/>
+				<ActivityIndicator id="loader"/>
+			</View>
+			<Widget id="fab" src="com.juanagu.fab" platform="android"/>
+		</View>
+	</View>
+</Alloy>

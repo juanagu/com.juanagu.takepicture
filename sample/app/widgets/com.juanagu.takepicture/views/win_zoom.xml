@@ -1,0 +1,12 @@
+<Alloy>
+	<Window onOpen="onOpen" onClose="onClose">
+		<ScrollView id="scroll">
+			<ImageView id="image"/>
+		</ScrollView>
+		<Toolbar id="toolbar" platform="ios">
+			<Items>
+				<Button id="btn_back"/>
+			</Items>
+		</Toolbar>
+	</Window>
+</Alloy>

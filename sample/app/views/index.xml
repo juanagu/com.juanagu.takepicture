@@ -1,0 +1,9 @@
+<Alloy>
+	<Window onClose="onClose">
+		<ScrollView layout="vertical">
+			<Widget src="com.juanagu.takepicture" id="tp" />
+			<Widget src="com.juanagu.takepicture" id="tp2" />
+			<Widget src="com.juanagu.takepicture" id="tp3" />
+		</ScrollView>
+	</Window>
+</Alloy>

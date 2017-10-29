@@ -1,0 +1,66 @@
+"#index":{
+	title: 'Jagu TakePicture',
+	backgroundColor: 'white'
+},
+
+/*Custom design*/
+"#tp2":{
+	width:Ti.UI.FILL,
+	container_general:{
+		width: '158dp',
+		height: '110dp'
+	},
+	container_image:{
+		borderRadius: '50dp',
+		borderWidth: '2dp'
+	},
+	image:{
+		width: '100dp',
+		height: '100dp'
+	},
+	icon_empty:{
+		width: '30dp',
+		height: '30dp'
+	},
+	ios:{
+		withFab: true
+	}
+},
+"#tp3":{
+	width:Ti.UI.FILL,
+	borderColor: 'blue',
+	borderWidth: '2dp',
+	container_general:{
+		width: Ti.UI.FILL,
+		height: '150dp'
+	},
+	container_image:{
+		borderWidth: 0,
+		right: '36dp',
+		height: '150dp'
+	},
+	image:{
+		width: Ti.UI.FILL,
+		height:'300dp' //scale image
+	},
+	icon_empty:{
+		width: '50dp',
+		height: '50dp'
+	},
+	ios:{
+		withFab: true
+	},
+	fab:{
+		backgroundColor: 'blue',
+		height: '150dp',
+		top: 0,
+		width: '36dp',
+		right: 0,
+		borderRadius: 0,
+		circle:{
+			height:Ti.UI.FILL,
+			width:Ti.UI.FILL,
+			borderRadius: 0
+		}
+	}
+}

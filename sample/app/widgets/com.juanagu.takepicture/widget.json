@@ -1,0 +1,13 @@
+{
+	"id": "com.juanagu.takepicture",
+	"name": "com.juanagu.takepicture",
+	"description" : "",
+	"author": "jagu",
+	"version": "2.0",
+	"copyright":"Jagu (c) 2017",
+	"license":"Apache 2.0",
+	"min-alloy-version": "1.0",
+	"min-titanium-version":"2.1",
+	"tags":"photo, profile, takepicture",
+	"platforms":"ios,android"
+}
