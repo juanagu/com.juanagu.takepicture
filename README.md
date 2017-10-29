@@ -15,7 +15,7 @@ https://github.com/m1ga/TiImageCropper/releases/tag/2.0.1 by @m1ga
 
 ## Events
 
-#### Generals
+#### General
 
 * successImage = When saved the original image.
 * error = When an error ocurred trying save the original image.
