@@ -36,7 +36,6 @@ if (OS_IOS) {
 // Arguments passed into this controller can be accessed via the `$.args` object directly or:
 var args = $.args;
 
-
 var thumbnailPath = null;
 var imagePath = null;
 var name = 'my_base_name';
@@ -58,7 +57,6 @@ var debounceTime = 1000;
 var allowEditing = true;
 
 var fab = OS_ANDROID ? $.fab : null;
-
 
 var options = {
 	showControls : OS_IOS,
@@ -185,7 +183,11 @@ var cleanup = function() {
  * apply listeners to controller
  */
 var applyListeners = function() {
+
 	$.image.addEventListener('click', onClickImage);
+	$.image.addEventListener('load', downloadSuccess);
+	$.image.addEventListener('error', downloadError);
+
 	if (editMode && fab) {
 		fab.on('click', onClickCamera);
 	}
@@ -553,30 +555,16 @@ var getThumbnailPath = function() {
  */
 var setImage = function(img) {
 	if (!_.isNull(img)) {
-		if (OS_ANDROID) {
-			//HACK null image to refresh
-			if (img == $.image.image) {
-				$.image.image = null;
-			}
-			$.image.setImage(img);
-
-		} else if (OS_IOS) {
-			$.image.removeAllChildren();
-			$.image.add(Titanium.UI.createImageView({
-				height : Ti.UI.SIZE,
-				width : Ti.UI.FILL,
-				autorotate : true,
-				image : img,
-				touchEnabled : false
-			}));
-		}
-
+		$.image.hide();
 		$.icon_empty.hide();
-		//HACK to ios because visible false not work
-		if (OS_IOS) {
-			$.icon_empty.zIndex = 0;
-			$.image.zIndex = 1;
+		$.loader.show();
+		
+		if ($.image.image == img) {
+			$.image.image = null;
 		}
+
+		$.image.setImage(img);
+		
 	} else {
 		$.icon_empty.show();
 	}
@@ -639,6 +627,18 @@ if (OS_IOS) {
 		}
 	};
 }
+
+var downloadSuccess = function() {
+	$.trigger('load:success');
+	$.loader.hide();
+	$.image.show();
+};
+
+var downloadError = function() {
+	$.trigger('load:error');
+	$.image.hide();
+	$.icon_empty.show();
+};
 /** ------------------------
  Integration with Widgets.nlFokkezbForms
  ------------------------**/
@@ -663,6 +663,7 @@ exports.onClose = onClose;
 exports.cleanup = cleanup;
 exports.getImagePath = getImagePath;
 exports.getThumbnailPath = getThumbnailPath;
+exports.setImage = setImage;
 /*Integration with Widgets.nlFokkezbForms */
 exports.isValid = isValid;
 exports.getValue = getImagePath;

@@ -18,6 +18,9 @@ var onClose = function(e) {
 		}
 		isTp1 = false;
 	});
+	
+	//set default image for tp2
+	$.tp2.setImage('https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Appcelerator_logo.svg/220px-Appcelerator_logo.svg.png');
 
 })();
 
