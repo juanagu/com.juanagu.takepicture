@@ -558,13 +558,13 @@ var setImage = function(img) {
 		$.image.hide();
 		$.icon_empty.hide();
 		$.loader.show();
-		
+
 		if ($.image.image == img) {
 			$.image.image = null;
 		}
 
 		$.image.setImage(img);
-		
+
 	} else {
 		$.icon_empty.show();
 	}
@@ -642,17 +642,54 @@ var downloadError = function() {
 /** ------------------------
  Integration with Widgets.nlFokkezbForms
  ------------------------**/
-var isValid = function() {
-	return _.isString(imagePath) && !_.isEmpty(imagePath);
-};
 
-var focus = function() {
-	//nothing
-};
+if (args.nlFokkezbForms) {
 
-var blur = function() {
-	//nothing
-};
+	exports.baseController = '../widgets/nl.fokkezb.form/controllers/field';
+	$.__widgetId = 'takepicture.fields';
+
+	$.focus = focus;
+	$.getValue = getValue;
+	$.setValue = setValue;
+	$.isValid = isValid;
+
+	/**
+	 * Constructor.
+	 *
+	 * @constructor
+	 * @method Controller
+	 * @param args Arguments which will also be used to call {@link Widgets.nlFokkezbForm.controllers.field#Controller}.
+	 * @param {Object} [args.input] Properties to apply to the `Ti.UI.Switch`.
+	 * @param {Boolean} [args.value=false] Set to `true` to turn the switch on.
+	 */
+	(function constructor(args) {
+		onOpen({});
+		// add the input to the row
+		$.setInput($.widget);
+
+	})(arguments[0]);
+
+	function focus() {
+		//nothing
+	}
+
+	function getValue() {
+		return getImagePath();
+	}
+
+	function setValue(val) {
+		setImage(val);
+	}
+
+	function isValid() {
+		return _.isString(imagePath) && !_.isEmpty(imagePath);
+	}
+
+	function onChange() {
+		$.change();
+	}
+
+}
 
 /** ------------------------
  public
@@ -664,9 +701,4 @@ exports.cleanup = cleanup;
 exports.getImagePath = getImagePath;
 exports.getThumbnailPath = getThumbnailPath;
 exports.setImage = setImage;
-/*Integration with Widgets.nlFokkezbForms */
-exports.isValid = isValid;
-exports.getValue = getImagePath;
-exports.setValue = setImage;
-exports.next = focus;
-exports.blur = blur;
+
