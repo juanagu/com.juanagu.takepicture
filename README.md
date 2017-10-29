@@ -44,3 +44,7 @@ https://github.com/m1ga/TiImageCropper/releases/tag/2.0.1 by @m1ga
 ## How use?
 
 Check the sample
+
+
+#### Donation
+###### Do you want to help me? https://www.paypal.me/JuanIgnacioAgu
