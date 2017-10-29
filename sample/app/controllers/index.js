@@ -6,13 +6,17 @@ var onClose = function(e) {
 
 	var tps = [$.tp, $.tp2, $.tp3];
 
+	var isTp1 = true;
 	tps.forEach(function(tp) {
 		tp.onOpen({});
-		if (OS_IOS) {
-			tp.applyProperties({
-				parentWindow : $.index
-			});
+		if (isTp1) {
+			if (OS_IOS) {
+				tp.applyProperties({
+					parentWindow : $.index
+				});
+			}
 		}
+		isTp1 = false;
 	});
 
 })();

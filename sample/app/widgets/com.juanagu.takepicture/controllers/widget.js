@@ -81,7 +81,10 @@ if (OS_IOS) {
 		right : 0,
 		bottom : 0,
 		backgroundColor : 'transparent',
-		touchEnabled : true
+		touchEnabled : true,
+		icon : {
+			image : WPATH('images/ic_photo_camera_white.png')
+		}
 	};
 };
 /** ------------------------
@@ -127,7 +130,6 @@ var applyProperties = function(properties) {
 			allowEditing = properties.allowEditing;
 		}
 
-		
 		if (_.has(properties, 'image')) {
 			_.extend($.image, _.omit(properties.image, 'image'));
 		}
@@ -141,26 +143,28 @@ var applyProperties = function(properties) {
 			_.extend($.icon_empty, properties.icon_empty);
 		}
 
-		if(OS_ANDROID && _.has(properties, 'fab')){
+		if (OS_ANDROID && _.has(properties, 'fab')) {
 			$.fab.applyProperties(properties.fab);
 		}
-		
-		if (OS_IOS && _.has(properties, 'ios')) {
-			if (properties.ios.widthFab) {
+
+		if (OS_IOS && _.isNull(fab) && _.has(properties, 'ios')) {
+			Ti.API.info('properties.ios', JSON.stringify(properties.ios));
+			if (properties.ios.withFab) {
 				if (_.has(properties.ios, 'fab')) {
-					iOSFabStyle = properties.ios.fab;
+					_.extend(iOSFabStyle, properties.ios.fab);
+				} else if (_.has(properties, 'fab')) {
+					_.extend(iOSFabStyle, properties.fab);
 				}
 				addFABiOS();
 
 			}
 		}
-		
-		if (OS_IOS && _.has(properties, 'parentWindow')) {
+
+		if (OS_IOS && _.isNull(fab) && _.has(properties, 'parentWindow')) {
 			parentWindow = properties.parentWindow;
 			configureRightNavButton();
 		}
-		
-		
+
 		_.extend($.widget, _.omit(properties, 'options', 'imagePath', 'thumbnailPath', 'name', 'fab', 'imageMaxSize', 'thumbnailMaxsize', 'editMode', 'parentWindow', 'allowEditing', 'image', 'container_general', 'container_image', 'icon_empty', 'ios'));
 	}
 
@@ -630,12 +634,16 @@ if (OS_IOS) {
 
 }
 
-var addFABiOS = function() {
-	if (_.isNull(fab)) {
-		fab = Alloy.createWidget('com.juanagu.fab', iOSFabStyle);
-		$.container_general.add(fab.getView());
-	}
-};
+if (OS_IOS) {
+	var addFABiOS = function() {
+
+		Ti.API.info('addfabios');
+		if (_.isNull(fab)) {
+			fab = Alloy.createWidget('com.juanagu.fab', iOSFabStyle);
+			$.container_general.add(fab.getView());
+		}
+	};
+}
 /** ------------------------
  Integration with Widgets.nlFokkezbForms
  ------------------------**/

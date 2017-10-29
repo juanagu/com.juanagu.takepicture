@@ -1,11 +1,13 @@
 <Alloy>
-	<View class="fill_size">
-		<View class="fill_size top">
-			<ImageView id="image" platform="android"/>
-			<View id="image" platform="ios"/>
-			<ImageView id="icon_empty" class="icon"/>
-			<ActivityIndicator id="loader"/>
+	<View class="top">
+		<View id="container_general" class="top">
+			<View id="container_image" class="top">
+				<ImageView id="image" platform="android"/>
+				<View id="image" platform="ios"/>
+				<ImageView id="icon_empty" class="icon"/>
+				<ActivityIndicator id="loader"/>
+			</View>
+			<Widget id="fab" src="com.juanagu.fab" platform="android"/>
 		</View>
-		<Widget id="fab" src="co.clarika.fab" class="right_10 bottom" platform="android"/>
 	</View>
 </Alloy>
