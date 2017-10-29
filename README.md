@@ -13,6 +13,32 @@ https://github.com/appcelerator-modules/ti.imagefactory
 #### [Optional] Android Crop:
 https://github.com/m1ga/TiImageCropper/releases/tag/2.0.1 by @m1ga
 
+## Events
+
+#### Generals
+
+* successImage = When saved the original image.
+* error = When an error ocurred trying save the original image.
+* successThumbnail = When saved the thumbnail image.
+* load:success = When load the image.
+* load:error = When don't load the image.
+
+#### Android
+
+* crop:error = Notify an error when crop the image.
+* crop:cancel = Notify when user cancel the crop.
+
+
+## Methods
+
+* applyProperties: set properties for takepicture widget and fab widget.
+* setImage: set default image.
+* onOpen: Initialize the widget.
+* onClose: release the takepicture widget and fab widget.
+* cleanup: release the takepicture widget.
+* getImagePath: get the original image path.
+* getThumbnailPath: get the thumbnail path.
+
 
 
 ## How use?
