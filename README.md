@@ -39,6 +39,9 @@ https://github.com/m1ga/TiImageCropper/releases/tag/2.0.1 by @m1ga
 * getImagePath: get the original image path.
 * getThumbnailPath: get the thumbnail path.
 
+## Integration with others widgets
+
+* iOS: https://github.com/FokkeZB/nl.fokkezb.form
 
 
 ## How use?
