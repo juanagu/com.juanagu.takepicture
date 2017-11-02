@@ -42,10 +42,11 @@ var form = Alloy.createWidget('nl.fokkezb.form', {
 			type : 'switch'
 		}, {
 			name : 'photo',
-			label : 'photo',
+			
 			widget : 'com.juanagu.takepicture',
 			type : {
 				nlFokkezbForms : true,
+				label : 'photo',
 				ios : {
 					withFab : true,
 					fab : {

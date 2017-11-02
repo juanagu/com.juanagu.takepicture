@@ -639,58 +639,58 @@ var downloadError = function() {
 	$.image.hide();
 	$.icon_empty.show();
 };
-/** ------------------------
- Integration with Widgets.nlFokkezbForms
- ------------------------**/
+if (OS_IOS) {
+	/** ------------------------
+	 Integration with Widgets.nlFokkezbForms
+	 ------------------------**/
 
-if (args.nlFokkezbForms) {
+	if (args.nlFokkezbForms) {
 
-	exports.baseController = '../widgets/nl.fokkezb.form/controllers/field';
-	$.__widgetId = 'takepicture.fields';
+		exports.baseController = '../widgets/nl.fokkezb.form/controllers/field';
+		$.__widgetId = 'takepicture.fields';
 
-	$.focus = focus;
-	$.getValue = getValue;
-	$.setValue = setValue;
-	$.isValid = isValid;
+		$.focus = focus;
+		$.getValue = getValue;
+		$.setValue = setValue;
+		$.isValid = isValid;
 
-	/**
-	 * Constructor.
-	 *
-	 * @constructor
-	 * @method Controller
-	 * @param args Arguments which will also be used to call {@link Widgets.nlFokkezbForm.controllers.field#Controller}.
-	 * @param {Object} [args.input] Properties to apply to the `Ti.UI.Switch`.
-	 * @param {Boolean} [args.value=false] Set to `true` to turn the switch on.
-	 */
-	(function constructor(args) {
-		onOpen({});
-		// add the input to the row
-		$.setInput($.widget);
+		/**
+		 * Constructor.
+		 *
+		 * @constructor
+		 * @method Controller
+		 * @param args Arguments which will also be used to call {@link Widgets.nlFokkezbForm.controllers.field#Controller}
+		 */
+		(function constructor(args) {
+			
+			onOpen({});
+			// add the input to the row
+			$.setInput($.widget);
 
-	})(arguments[0]);
+		})(arguments[0]);
 
-	function focus() {
-		//nothing
+		function focus() {
+			//nothing
+		}
+
+		function getValue() {
+			return getImagePath();
+		}
+
+		function setValue(val) {
+			setImage(val);
+		}
+
+		function isValid() {
+			return _.isString(imagePath) && !_.isEmpty(imagePath);
+		}
+
+		function onChange() {
+			$.change();
+		}
+
 	}
-
-	function getValue() {
-		return getImagePath();
-	}
-
-	function setValue(val) {
-		setImage(val);
-	}
-
-	function isValid() {
-		return _.isString(imagePath) && !_.isEmpty(imagePath);
-	}
-
-	function onChange() {
-		$.change();
-	}
-
 }
-
 /** ------------------------
  public
  ------------------------**/
