@@ -1,0 +1,21 @@
+<Alloy>
+  <Label id="input" class="input" />
+
+  <Popover id="popover" class="popover" platform="ios" formFactor="tablet">
+    <ContentView>
+      <NavigationWindow>
+        <Window id="win">
+          <RightNavButton onClick="onSetClick" systemButton="SAVE" />
+        </Window>
+      </NavigationWindow>
+    </ContentView>
+  </Popover>
+
+  <Picker id="picker" class="picker" />
+  
+  <TableViewRow id="pickerRow" class="popover" platform="ios" formFactor="phone">
+  </TableViewRow>
+
+  <Button id="unset" onClick="onUnsetClick" systemButton="TRASH" />
+
+</Alloy>

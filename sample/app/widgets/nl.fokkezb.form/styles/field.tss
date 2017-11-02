@@ -1,0 +1,39 @@
+".container": {
+    layout: "horizontal",
+    height: Ti.UI.SIZE
+}
+".row[platform=ios]": {
+  selectionStyle: Ti.UI.iOS.TableViewCellSelectionStyle.NONE
+}
+
+".label": {
+  width: 120,
+
+  top: 19,
+  left: 15,
+
+  color: '#000'
+}
+
+".label[platform=ios]": {
+  height: Ti.UI.SIZE
+}
+".label[platform=android]": {
+  lines: 1
+}
+".control": {
+  height: Ti.UI.SIZE,
+
+  top: 10,
+  bottom: 10,
+  right: 15,
+  left: 10
+}
+
+".errorRow": {
+  backgroundColor: '#ff948d'
+}
+
+".errorLabel": {
+  color: '#fff'
+}

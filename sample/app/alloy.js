@@ -9,3 +9,4 @@
 // object. For example:
 //
 // Alloy.Globals.someGlobalFunction = function(){};
+Alloy.Globals.nlFokkezbForms=true;
