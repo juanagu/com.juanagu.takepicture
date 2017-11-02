@@ -555,34 +555,16 @@ var getThumbnailPath = function() {
  */
 var setImage = function(img) {
 	if (!_.isNull(img)) {
-		/*if (OS_ANDROID) {
-		 //HACK null image to refresh
-		 if (img == $.image.image) {
-		 $.image.image = null;
-		 }
-		 $.image.setImage(img);
-
-		 } else if (OS_IOS) {
-		 $.image.removeAllChildren();
-		 $.image.add(Titanium.UI.createImageView({
-		 height : Ti.UI.SIZE,
-		 width : Ti.UI.FILL,
-		 autorotate : true,
-		 image : img,
-		 touchEnabled : false
-		 }));
-		 }
-		 */
 		$.image.hide();
 		$.icon_empty.hide();
 		$.loader.show();
-		
+
 		if ($.image.image == img) {
 			$.image.image = null;
 		}
 
 		$.image.setImage(img);
-		
+
 	} else {
 		$.icon_empty.show();
 	}
@@ -657,21 +639,58 @@ var downloadError = function() {
 	$.image.hide();
 	$.icon_empty.show();
 };
-/** ------------------------
- Integration with Widgets.nlFokkezbForms
- ------------------------**/
-var isValid = function() {
-	return _.isString(imagePath) && !_.isEmpty(imagePath);
-};
+if (OS_IOS) {
+	/** ------------------------
+	 Integration with Widgets.nlFokkezbForms
+	 ------------------------**/
 
-var focus = function() {
-	//nothing
-};
+	if (args.nlFokkezbForms) {
 
-var blur = function() {
-	//nothing
-};
+		exports.baseController = '../widgets/nl.fokkezb.form/controllers/field';
+		$.__widgetId = 'takepicture.fields';
 
+		$.focus = focus;
+		$.getValue = getValue;
+		$.setValue = setValue;
+		$.isValid = isValid;
+
+		/**
+		 * Constructor.
+		 *
+		 * @constructor
+		 * @method Controller
+		 * @param args Arguments which will also be used to call {@link Widgets.nlFokkezbForm.controllers.field#Controller}
+		 */
+		(function constructor(args) {
+			
+			onOpen({});
+			// add the input to the row
+			$.setInput($.widget);
+
+		})(arguments[0]);
+
+		function focus() {
+			//nothing
+		}
+
+		function getValue() {
+			return getImagePath();
+		}
+
+		function setValue(val) {
+			setImage(val);
+		}
+
+		function isValid() {
+			return _.isString(imagePath) && !_.isEmpty(imagePath);
+		}
+
+		function onChange() {
+			$.change();
+		}
+
+	}
+}
 /** ------------------------
  public
  ------------------------**/
@@ -682,9 +701,4 @@ exports.cleanup = cleanup;
 exports.getImagePath = getImagePath;
 exports.getThumbnailPath = getThumbnailPath;
 exports.setImage = setImage;
-/*Integration with Widgets.nlFokkezbForms */
-exports.isValid = isValid;
-exports.getValue = getImagePath;
-exports.setValue = setImage;
-exports.next = focus;
-exports.blur = blur;
+

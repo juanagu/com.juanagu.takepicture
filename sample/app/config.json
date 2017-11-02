@@ -1,15 +1,17 @@
 {
-    "global": {},
-    "env:development": {},
-    "env:test": {},
-    "env:production": {},
-    "os:android": {},
-    "os:blackberry": {},
-    "os:ios": {},
-    "os:mobileweb": {},
-    "os:windows": {},
-    "dependencies": {
-    	"com.juanagu.takepicture":"2.0",
-    	"com.juanagu.fab":"1.0"
-    }
+  "global": {},
+  "env:development": {},
+  "env:test": {},
+  "env:production": {},
+  "os:android": {},
+  "os:blackberry": {},
+  "os:ios": {},
+  "os:mobileweb": {},
+  "os:windows": {},
+  "dependencies": {
+    "com.juanagu.takepicture": "2.1",
+    "com.juanagu.fab": "1.0",
+    "nl.fokkezb.form": "*",
+    "nl.fokkezb.color": "*"
+  }
 }
