@@ -23,44 +23,45 @@ var onClose = function(e) {
 	$.tp2.setImage('https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Appcelerator_logo.svg/220px-Appcelerator_logo.svg.png');
 
 })();
+//only works for iOS
+if(OS_IOS){
+	var form = Alloy.createWidget('nl.fokkezb.form', {
+		fieldsets : [{
+			legend : 'Test Integration with forms',
+			fields : [{
+				name : 'name',
+				label : 'Your name',
+				type : 'text'
+			}, {
+				name : 'email',
+				label : 'Your email address',
+				type : 'text',
+				format : 'email'
+			}, {
+				name : 'like',
+				label : 'Do you like it?',
+				type : 'switch'
+			}, {
+				name : 'photo',
 
-var form = Alloy.createWidget('nl.fokkezb.form', {
-	fieldsets : [{
-		legend : 'Test Integration with forms',
-		fields : [{
-			name : 'name',
-			label : 'Your name',
-			type : 'text'
-		}, {
-			name : 'email',
-			label : 'Your email address',
-			type : 'text',
-			format : 'email'
-		}, {
-			name : 'like',
-			label : 'Do you like it?',
-			type : 'switch'
-		}, {
-			name : 'photo',
-			
-			widget : 'com.juanagu.takepicture',
-			type : {
-				nlFokkezbForms : true,
-				label : 'photo',
-				ios : {
-					withFab : true,
-					fab : {
-						icon : {
-							image : '/images/ic_photo_camera_black.png'
+				widget : 'com.juanagu.takepicture',
+				type : {
+					nlFokkezbForms : true,
+					label : 'photo',
+					ios : {
+						withFab : true,
+						fab : {
+							icon : {
+								image : '/images/ic_photo_camera_black.png'
+							}
 						}
 					}
 				}
-			}
+			}]
 		}]
-	}]
-});
-$.scroll.add(form.getView());
-
+	});
+	$.scroll.add(form.getView());
+}
 if (OS_ANDROID) {
 	$.index.open();
 } else {
